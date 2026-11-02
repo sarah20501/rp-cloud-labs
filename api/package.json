@@ -1,0 +1,12 @@
+{
+  "name": "tool-session-service",
+  "version": "1.0.0",
+  "description": "RP-Cloud Labs Tool-Session Service",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
