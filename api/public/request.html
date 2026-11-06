@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Tool Session | RP-Cloud Labs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h2>RP-Cloud Labs</h2>
+        <span>Student Portal</span>
+    </header>
+
+    <nav class="navigation">
+        <a href="index.html">Dashboard</a>
+        <a href="request.html" class="active">Request a Tool Session</a>
+        <a href="index.html#sessions">My Sessions</a>
+    </nav>
+
+    <main class="container">
+
+        <section class="welcome">
+            <h1>Request a Tool Session</h1>
+            <p>Complete the form below to request access to a learning tool.</p>
+        </section>
+
+        <section class="tool-card request-form">
+
+            <form id="sessionForm">
+
+                <label for="studentId">Student ID</label>
+                <input
+                    type="text"
+                    id="studentId"
+                    placeholder="Enter your student ID"
+                    required
+                >
+
+                <label for="college">College</label>
+                <select id="college" required>
+                    <option value="">Select your college</option>
+                    <option value="RP Karongi College">RP Karongi College</option>
+                    <option value="RP Kigali College">RP Kigali College</option>
+                    <option value="RP Tumba College">RP Tumba College</option>
+                    <option value="RP Musanze College">RP Musanze College</option>
+                    <option value="RP Huye College">RP Huye College</option>
+                </select>
+
+                <label for="tool">Learning Tool</label>
+                <select id="tool" required>
+                    <option value="">Select a learning tool</option>
+                    <option value="Visual Studio Code">Visual Studio Code</option>
+                    <option value="MySQL Workbench">MySQL Workbench</option>
+                    <option value="ArchiCAD">ArchiCAD</option>
+                </select>
+
+                <button type="submit" class="request-button">
+                    Submit Request
+                </button>
+
+                <div id="responseMessage" role="status"></div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>RP-Cloud Labs | Student Learning Platform</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
