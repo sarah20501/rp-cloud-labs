@@ -1,0 +1,62 @@
+
+name: RP Cloud Labs CI
+
+on:
+  push:
+    branches:
+      - main
+      - "feature/**"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-validate:
+    name: Build and Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+
+      - name: Install dependencies
+        working-directory: api
+        run: npm ci
+
+      - name: Check JavaScript syntax
+        run: node --check api/src/index.js
+
+      - name: Validate Docker Compose
+        run: docker compose config -q
+
+      - name: Start PostgreSQL
+        run: docker compose up -d db
+
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..30}; do
+            if docker compose exec -T db pg_isready -U rp_user -d rp_cloud_labs; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "PostgreSQL did not become ready"
+          exit 1
+
+      - name: Run Flyway migrations
+        run: docker compose run --rm flyway
+
+      - name: Verify database migrations
+        run: |
+          docker compose exec -T db psql -U rp_user -d rp_cloud_labs -c "SELECT version, description, success FROM flyway_schema_history;"
+
+      - name: Stop containers
+        if: always()
+        run: docker compose down
