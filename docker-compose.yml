@@ -1,3 +1,4 @@
+
 services:
 
   api:
@@ -31,6 +32,18 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - rp-cloud-network
+
+  flyway:
+    image: flyway/flyway:10
+    container_name: tool-session-flyway
+    command: -url=jdbc:postgresql://db:5432/rp_cloud_labs -user=rp_user -password=rp_password migrate
+    volumes:
+      - ./database/migrations:/flyway/sql
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - rp-cloud-network
 
